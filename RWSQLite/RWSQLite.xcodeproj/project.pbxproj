@@ -8,6 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		17FEA0B32358986A006B7762 /* RWSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0B22358986A006B7762 /* RWSQLite.swift */; };
+		17FEA0B72358A115006B7762 /* RWSQLiteBlob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0B62358A115006B7762 /* RWSQLiteBlob.swift */; };
+		17FEA0B92358A123006B7762 /* RWSQLiteBlobOpenOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0B82358A123006B7762 /* RWSQLiteBlobOpenOptions.swift */; };
+		17FEA0BB2358A132006B7762 /* RWSQLiteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0BA2358A132006B7762 /* RWSQLiteData.swift */; };
+		17FEA0BD2358A140006B7762 /* RWSQLiteDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0BC2358A140006B7762 /* RWSQLiteDataType.swift */; };
+		17FEA0BF2358A14D006B7762 /* RWSQLiteError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0BE2358A14D006B7762 /* RWSQLiteError.swift */; };
+		17FEA0C12358A15B006B7762 /* RWSQLiteFileOpenOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C02358A15B006B7762 /* RWSQLiteFileOpenOptions.swift */; };
+		17FEA0C32358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C22358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift */; };
+		17FEA0C52358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C42358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift */; };
+		17FEA0C72358A189006B7762 /* RWSQLiteLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C62358A189006B7762 /* RWSQLiteLimit.swift */; };
+		17FEA0C92358A196006B7762 /* RWSQLiteMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C82358A196006B7762 /* RWSQLiteMutex.swift */; };
+		17FEA0CB2358A1A2006B7762 /* RWSQLiteMutexType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0CA2358A1A2006B7762 /* RWSQLiteMutexType.swift */; };
+		17FEA0CD2358A1AD006B7762 /* RWSQLiteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0CC2358A1AD006B7762 /* RWSQLiteRow.swift */; };
+		17FEA0CF2358A1B8006B7762 /* RWSQLiteStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0CE2358A1B8006B7762 /* RWSQLiteStatement.swift */; };
+		17FEA0D12358A1C7006B7762 /* RWSQLiteString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0D02358A1C7006B7762 /* RWSQLiteString.swift */; };
+		17FEA0D32358A1D3006B7762 /* RWSQLiteStringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0D22358A1D3006B7762 /* RWSQLiteStringEncoding.swift */; };
+		17FEA0D52358A1E0006B7762 /* RWSQLiteURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0D42358A1E0006B7762 /* RWSQLiteURL.swift */; };
+		17FEA0D72358A1EB006B7762 /* RWSQLiteZeroData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0D62358A1EB006B7762 /* RWSQLiteZeroData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +42,23 @@
 /* Begin PBXFileReference section */
 		17FEA0A72358980B006B7762 /* libRWSQLite.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRWSQLite.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FEA0B22358986A006B7762 /* RWSQLite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RWSQLite.swift; sourceTree = "<group>"; };
+		17FEA0B62358A115006B7762 /* RWSQLiteBlob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteBlob.swift; sourceTree = "<group>"; };
+		17FEA0B82358A123006B7762 /* RWSQLiteBlobOpenOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteBlobOpenOptions.swift; sourceTree = "<group>"; };
+		17FEA0BA2358A132006B7762 /* RWSQLiteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteData.swift; sourceTree = "<group>"; };
+		17FEA0BC2358A140006B7762 /* RWSQLiteDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteDataType.swift; sourceTree = "<group>"; };
+		17FEA0BE2358A14D006B7762 /* RWSQLiteError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteError.swift; sourceTree = "<group>"; };
+		17FEA0C02358A15B006B7762 /* RWSQLiteFileOpenOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteFileOpenOptions.swift; sourceTree = "<group>"; };
+		17FEA0C22358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteLibraryConfigurationOptions.swift; sourceTree = "<group>"; };
+		17FEA0C42358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteLibraryThreadsafeMode.swift; sourceTree = "<group>"; };
+		17FEA0C62358A189006B7762 /* RWSQLiteLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteLimit.swift; sourceTree = "<group>"; };
+		17FEA0C82358A196006B7762 /* RWSQLiteMutex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteMutex.swift; sourceTree = "<group>"; };
+		17FEA0CA2358A1A2006B7762 /* RWSQLiteMutexType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteMutexType.swift; sourceTree = "<group>"; };
+		17FEA0CC2358A1AD006B7762 /* RWSQLiteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteRow.swift; sourceTree = "<group>"; };
+		17FEA0CE2358A1B8006B7762 /* RWSQLiteStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteStatement.swift; sourceTree = "<group>"; };
+		17FEA0D02358A1C7006B7762 /* RWSQLiteString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteString.swift; sourceTree = "<group>"; };
+		17FEA0D22358A1D3006B7762 /* RWSQLiteStringEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteStringEncoding.swift; sourceTree = "<group>"; };
+		17FEA0D42358A1E0006B7762 /* RWSQLiteURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteURL.swift; sourceTree = "<group>"; };
+		17FEA0D62358A1EB006B7762 /* RWSQLiteZeroData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteZeroData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +100,23 @@
 			isa = PBXGroup;
 			children = (
 				17FEA0B22358986A006B7762 /* RWSQLite.swift */,
+				17FEA0B62358A115006B7762 /* RWSQLiteBlob.swift */,
+				17FEA0B82358A123006B7762 /* RWSQLiteBlobOpenOptions.swift */,
+				17FEA0BA2358A132006B7762 /* RWSQLiteData.swift */,
+				17FEA0BC2358A140006B7762 /* RWSQLiteDataType.swift */,
+				17FEA0BE2358A14D006B7762 /* RWSQLiteError.swift */,
+				17FEA0C02358A15B006B7762 /* RWSQLiteFileOpenOptions.swift */,
+				17FEA0C22358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift */,
+				17FEA0C42358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift */,
+				17FEA0C62358A189006B7762 /* RWSQLiteLimit.swift */,
+				17FEA0C82358A196006B7762 /* RWSQLiteMutex.swift */,
+				17FEA0CA2358A1A2006B7762 /* RWSQLiteMutexType.swift */,
+				17FEA0CC2358A1AD006B7762 /* RWSQLiteRow.swift */,
+				17FEA0CE2358A1B8006B7762 /* RWSQLiteStatement.swift */,
+				17FEA0D02358A1C7006B7762 /* RWSQLiteString.swift */,
+				17FEA0D22358A1D3006B7762 /* RWSQLiteStringEncoding.swift */,
+				17FEA0D42358A1E0006B7762 /* RWSQLiteURL.swift */,
+				17FEA0D62358A1EB006B7762 /* RWSQLiteZeroData.swift */,
 			);
 			path = RWSQLite;
 			sourceTree = "<group>";
@@ -127,7 +178,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17FEA0D32358A1D3006B7762 /* RWSQLiteStringEncoding.swift in Sources */,
+				17FEA0C92358A196006B7762 /* RWSQLiteMutex.swift in Sources */,
+				17FEA0C32358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift in Sources */,
+				17FEA0CD2358A1AD006B7762 /* RWSQLiteRow.swift in Sources */,
 				17FEA0B32358986A006B7762 /* RWSQLite.swift in Sources */,
+				17FEA0CF2358A1B8006B7762 /* RWSQLiteStatement.swift in Sources */,
+				17FEA0B72358A115006B7762 /* RWSQLiteBlob.swift in Sources */,
+				17FEA0C12358A15B006B7762 /* RWSQLiteFileOpenOptions.swift in Sources */,
+				17FEA0C72358A189006B7762 /* RWSQLiteLimit.swift in Sources */,
+				17FEA0BD2358A140006B7762 /* RWSQLiteDataType.swift in Sources */,
+				17FEA0D52358A1E0006B7762 /* RWSQLiteURL.swift in Sources */,
+				17FEA0BB2358A132006B7762 /* RWSQLiteData.swift in Sources */,
+				17FEA0D12358A1C7006B7762 /* RWSQLiteString.swift in Sources */,
+				17FEA0C52358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift in Sources */,
+				17FEA0D72358A1EB006B7762 /* RWSQLiteZeroData.swift in Sources */,
+				17FEA0B92358A123006B7762 /* RWSQLiteBlobOpenOptions.swift in Sources */,
+				17FEA0CB2358A1A2006B7762 /* RWSQLiteMutexType.swift in Sources */,
+				17FEA0BF2358A14D006B7762 /* RWSQLiteError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
