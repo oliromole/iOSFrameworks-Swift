@@ -37,3 +37,19 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+struct RWSQLiteError: Error
+{
+    public let errorMessage: String?
+    public let extendedResultCode: RWSQLiteResultCode
+    public let resultCode: RWSQLiteResultCode
+    
+    // MARK: Initializers
+
+    public init(resultCode: RWSQLiteResultCode, extendedResultCode: RWSQLiteResultCode, errorMessage: String?)
+    {
+        self.errorMessage = errorMessage
+        self.extendedResultCode = extendedResultCode
+        self.resultCode = resultCode
+    }
+}
