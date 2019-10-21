@@ -38,7 +38,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-struct RWSQLiteResultCode : Equatable
+struct RWSQLiteResultCode: Equatable
 {
     public let rawValue: Int
     
@@ -175,7 +175,7 @@ struct RWSQLiteResultCode : Equatable
     
     public static func == (lhs: RWSQLiteResultCode, rhs: RWSQLiteResultCode) -> Bool
     {
-        let isEqual : Bool = (lhs.rawValue == rhs.rawValue)
+        let isEqual: Bool = (lhs.rawValue == rhs.rawValue)
         
         return isEqual
     }
