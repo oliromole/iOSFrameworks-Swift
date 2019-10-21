@@ -38,6 +38,8 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import SQLite3
+
 struct RWSQLiteError: Error
 {
     public let errorMessage: String?
@@ -45,11 +47,33 @@ struct RWSQLiteError: Error
     public let resultCode: RWSQLiteResultCode
     
     // MARK: Initializers
-
+    
     public init(resultCode: RWSQLiteResultCode, extendedResultCode: RWSQLiteResultCode, errorMessage: String?)
     {
         self.errorMessage = errorMessage
         self.extendedResultCode = extendedResultCode
         self.resultCode = resultCode
     }
+}
+
+func RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode) -> RWSQLiteError
+{
+    let extendedResultCode: RWSQLiteResultCode = resultCodeOrExtendedResultCode
+    
+    let resultCode: RWSQLiteResultCode = RWSQLiteResultCode(extendedResultCode.rawValue & 0xFF)
+    
+    let cErrorMessage: UnsafePointer<Int8>? = sqlite3_errstr(Int32(extendedResultCode.rawValue))
+    
+    var errorMessage: String?
+    
+    if let cErrorMessage = cErrorMessage
+    {
+        errorMessage = String(cString: cErrorMessage)
+    }
+    
+    let error = RWSQLiteError(resultCode: resultCode,
+                              extendedResultCode: extendedResultCode,
+                              errorMessage: errorMessage);
+    
+    return error
 }

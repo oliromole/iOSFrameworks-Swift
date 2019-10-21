@@ -38,35 +38,76 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import Foundation
 import SQLite3
 
 class RWSQLite
 {
-    private var mSqlite3 : OpaquePointer?
-
+    private var mSqlite3: OpaquePointer?
+    
     // MARK: Initializers
-
+    
     public init()
     {
         mSqlite3 = nil
     }
     
-    public convenience init(sqlite3 : OpaquePointer)
+    public convenience init(sqlite3: OpaquePointer?)
     {
         self.init()
         
         self.sqlite3 = sqlite3;
     }
     
-    // MARK: Deinitializer
+    public convenience init(fileName: String?, fileOpenOptions: RWSQLiteFileOpenOptions, virtualFileSystem: String?) throws
+    {
+        var sqlite3: OpaquePointer?
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_open_v2(fileName,
+                                                            &sqlite3,
+                                                            Int32(fileOpenOptions.rawValue),
+                                                            virtualFileSystem))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: resultCode)
 
+            throw error
+        }
+        
+        self.init(sqlite3: sqlite3)
+    }
+    
+    public convenience init(url: URL?, fileOpenOptions: RWSQLiteFileOpenOptions, virtualFileSystem: String?) throws
+    {
+        var sqlite3: OpaquePointer?
+        
+        let urlOpenOptions2: RWSQLiteFileOpenOptions = [fileOpenOptions, RWSQLiteFileOpenOptions.uri]
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_open_v2(url?.absoluteString,
+                                                            &sqlite3,
+                                                            Int32(urlOpenOptions2.rawValue),
+                                                            virtualFileSystem))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: resultCode)
+            
+            throw error
+        }
+        
+        self.init(sqlite3: sqlite3)
+    }
+    
+    // MARK: Deinitializer
+    
     deinit
     {
-        if (mSqlite3 != nil)
+        if mSqlite3 != nil
         {
             let resultCode = RWSQLiteResultCode(sqlite3_close(mSqlite3))
             
-            if (resultCode != RWSQLiteResultCode.ok)
+            if resultCode != RWSQLiteResultCode.ok
             {
                 fatalError("Can not close SQLite database.")
             }
@@ -77,7 +118,7 @@ class RWSQLite
     
     // MARK: - Managing the sqlite3
     
-    public var sqlite3 : OpaquePointer?
+    public var sqlite3: OpaquePointer?
     {
         get
         {
@@ -85,7 +126,7 @@ class RWSQLite
         }
         set
         {
-            if (mSqlite3 != newValue)
+            if mSqlite3 != newValue
             {
                 mSqlite3 = newValue
             }
