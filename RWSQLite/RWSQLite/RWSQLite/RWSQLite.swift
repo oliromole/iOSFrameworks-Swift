@@ -37,3 +37,58 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+import SQLite3
+
+class RWSQLite
+{
+    private var mSqlite3 : OpaquePointer?
+
+    // MARK: Initializers
+
+    public init()
+    {
+        mSqlite3 = nil
+    }
+    
+    public convenience init(sqlite3 : OpaquePointer)
+    {
+        self.init()
+        
+        self.sqlite3 = sqlite3;
+    }
+    
+    // MARK: Deinitializer
+
+    deinit
+    {
+        if (mSqlite3 != nil)
+        {
+            let resultCode = RWSQLiteResultCode(sqlite3_close(mSqlite3))
+            
+            if (resultCode != RWSQLiteResultCode.ok)
+            {
+                fatalError("Can not close SQLite database.")
+            }
+            
+            mSqlite3 = nil;
+        }
+    }
+    
+    // MARK: - Managing the sqlite3
+    
+    public var sqlite3 : OpaquePointer?
+    {
+        get
+        {
+            return mSqlite3
+        }
+        set
+        {
+            if (mSqlite3 != newValue)
+            {
+                mSqlite3 = newValue
+            }
+        }
+    }
+}
