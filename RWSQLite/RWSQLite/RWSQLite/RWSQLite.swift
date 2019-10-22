@@ -71,7 +71,7 @@ class RWSQLite
         if resultCode != RWSQLiteResultCode.ok
         {
             let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: resultCode)
-
+            
             throw error
         }
         
@@ -115,6 +115,21 @@ class RWSQLite
             mSqlite3 = nil;
         }
     }
+    
+    // MARK: - Configuring The SQLite Library
+    
+    func threadsafeMode() -> RWSQLiteLibraryThreadsafeMode
+    {
+        let threadsafeMode = RWSQLiteLibraryThreadsafeMode(sqlite3_threadsafe())
+        
+        return threadsafeMode
+    }
+    
+    //
+    // NOTE: Use the parameter "fileOpenOptions" (RWSQLiteFileOpenOptions.noMutex or RWSQLiteFileOpenOptions.fullMutex) in the method "init", becasee the 'sqlite3_config' is unavailable for Swift (variadic function is unavailable).
+    //
+    //func setThreadsafeMode(_ threadsafeMode: RWSQLiteLibraryThreadsafeMode) throws -> Void
+    //
     
     // MARK: - Managing the sqlite3
     

@@ -37,3 +37,35 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+struct RWSQLiteLibraryThreadsafeMode: Equatable
+{
+    public let rawValue: Int
+    
+    // MARK: Threadsafe Modes
+    
+    public static let singleThread = RWSQLiteLibraryThreadsafeMode(0)
+    public static let multiThread  = RWSQLiteLibraryThreadsafeMode(1)
+    public static let serialized   = RWSQLiteLibraryThreadsafeMode(2)
+    
+    // MARK: Initializers
+    
+    public init(_ rawValue: Int)
+    {
+        self.rawValue = rawValue
+    }
+    
+    public init(_ rawValue: Int32)
+    {
+        self.rawValue = Int(rawValue)
+    }
+    
+    // MARK: Equatable
+    
+    public static func == (lhs: RWSQLiteLibraryThreadsafeMode, rhs: RWSQLiteLibraryThreadsafeMode) -> Bool
+    {
+        let isEqual: Bool = (lhs.rawValue == rhs.rawValue)
+        
+        return isEqual
+    }
+}

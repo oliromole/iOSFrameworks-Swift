@@ -14,7 +14,6 @@
 		17FEA0BD2358A140006B7762 /* RWSQLiteDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0BC2358A140006B7762 /* RWSQLiteDataType.swift */; };
 		17FEA0BF2358A14D006B7762 /* RWSQLiteError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0BE2358A14D006B7762 /* RWSQLiteError.swift */; };
 		17FEA0C12358A15B006B7762 /* RWSQLiteFileOpenOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C02358A15B006B7762 /* RWSQLiteFileOpenOptions.swift */; };
-		17FEA0C32358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C22358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift */; };
 		17FEA0C52358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C42358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift */; };
 		17FEA0C72358A189006B7762 /* RWSQLiteLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C62358A189006B7762 /* RWSQLiteLimit.swift */; };
 		17FEA0C92358A196006B7762 /* RWSQLiteMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0C82358A196006B7762 /* RWSQLiteMutex.swift */; };
@@ -49,7 +48,6 @@
 		17FEA0BC2358A140006B7762 /* RWSQLiteDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteDataType.swift; sourceTree = "<group>"; };
 		17FEA0BE2358A14D006B7762 /* RWSQLiteError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteError.swift; sourceTree = "<group>"; };
 		17FEA0C02358A15B006B7762 /* RWSQLiteFileOpenOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteFileOpenOptions.swift; sourceTree = "<group>"; };
-		17FEA0C22358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteLibraryConfigurationOptions.swift; sourceTree = "<group>"; };
 		17FEA0C42358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteLibraryThreadsafeMode.swift; sourceTree = "<group>"; };
 		17FEA0C62358A189006B7762 /* RWSQLiteLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteLimit.swift; sourceTree = "<group>"; };
 		17FEA0C82358A196006B7762 /* RWSQLiteMutex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteMutex.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 				17FEA0BC2358A140006B7762 /* RWSQLiteDataType.swift */,
 				17FEA0BE2358A14D006B7762 /* RWSQLiteError.swift */,
 				17FEA0C02358A15B006B7762 /* RWSQLiteFileOpenOptions.swift */,
-				17FEA0C22358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift */,
 				17FEA0C42358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift */,
 				17FEA0C62358A189006B7762 /* RWSQLiteLimit.swift */,
 				17FEA0C82358A196006B7762 /* RWSQLiteMutex.swift */,
@@ -183,7 +180,6 @@
 			files = (
 				17FEA0D32358A1D3006B7762 /* RWSQLiteStringEncoding.swift in Sources */,
 				17FEA0C92358A196006B7762 /* RWSQLiteMutex.swift in Sources */,
-				17FEA0C32358A169006B7762 /* RWSQLiteLibraryConfigurationOptions.swift in Sources */,
 				17FEA0CD2358A1AD006B7762 /* RWSQLiteRow.swift in Sources */,
 				17FEA0B32358986A006B7762 /* RWSQLite.swift in Sources */,
 				17FEA0CF2358A1B8006B7762 /* RWSQLiteStatement.swift in Sources */,
