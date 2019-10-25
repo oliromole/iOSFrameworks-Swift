@@ -147,4 +147,41 @@ class RWSQLite
             }
         }
     }
+    
+    // MARK: - Closing A Database Connection
+    
+    func close(automatic: Bool = true) throws -> Void
+    {
+        guard let sqlite3 = mSqlite3 else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode : RWSQLiteResultCode
+        
+        if automatic
+        {
+            if #available(iOS 8.2, *)
+            {
+                resultCode = RWSQLiteResultCode(sqlite3_close_v2(sqlite3))
+            }
+            else
+            {
+                resultCode = RWSQLiteResultCode(sqlite3_close(sqlite3))
+            }
+        }
+        else
+        {
+            resultCode = RWSQLiteResultCode(sqlite3_close(sqlite3))
+        }
+        
+        if (resultCode != RWSQLiteResultCode.ok)
+        {
+            let error = RWSQLiteErrorCreate(sqlite3:sqlite3, resultCodeOrExtendedResultCode: resultCode)
+            
+            throw error
+        }
+    }
 }

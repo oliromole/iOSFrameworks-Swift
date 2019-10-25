@@ -77,3 +77,35 @@ func RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode) -> 
     
     return error
 }
+
+func RWSQLiteErrorCreate(sqlite3:OpaquePointer?, resultCodeOrExtendedResultCode: RWSQLiteResultCode) -> RWSQLiteError
+{
+    var extendedResultCode: RWSQLiteResultCode = resultCodeOrExtendedResultCode
+    
+    let resultCode: RWSQLiteResultCode = RWSQLiteResultCode(extendedResultCode.rawValue & 0xFF)
+    
+    if (extendedResultCode == resultCode) && (sqlite3 != nil)
+    {
+        let extendedResultCode2 = RWSQLiteResultCode(sqlite3_extended_errcode(sqlite3))
+        
+        if (extendedResultCode2.rawValue & 0xFF) == resultCode.rawValue
+        {
+            extendedResultCode = extendedResultCode2
+        }
+    }
+    
+    let cErrorMessage: UnsafePointer<Int8>? = sqlite3_errstr(Int32(extendedResultCode.rawValue))
+    
+    var errorMessage: String?
+    
+    if let cErrorMessage = cErrorMessage
+    {
+        errorMessage = String(cString: cErrorMessage)
+    }
+    
+    let error = RWSQLiteError(resultCode: resultCode,
+                              extendedResultCode: extendedResultCode,
+                              errorMessage: errorMessage);
+    
+    return error
+}
