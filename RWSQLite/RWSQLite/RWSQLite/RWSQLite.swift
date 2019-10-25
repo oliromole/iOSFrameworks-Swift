@@ -184,4 +184,20 @@ class RWSQLite
             throw error
         }
     }
+    
+    // MARK: - Getting the Last Error
+    
+    func lastError() -> RWSQLiteError
+    {
+        let error: RWSQLiteError = RWSQLiteErrorCreate(sqlite3: mSqlite3)
+        
+        return error;
+    }
+    
+    func throwLastError() throws -> Void
+    {
+        let error: RWSQLiteError = RWSQLiteErrorCreate(sqlite3: mSqlite3)
+        
+        throw error
+    }
 }
