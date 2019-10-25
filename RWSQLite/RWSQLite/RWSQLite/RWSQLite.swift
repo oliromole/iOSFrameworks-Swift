@@ -200,4 +200,56 @@ class RWSQLite
         
         throw error
     }
+    
+    // MARK: - Getting the Last Insert Rowid
+    
+    func lastInsertRowIdentifier() -> Int64
+    {
+        var lastInsertRow:Int64 = 0
+        
+        if (mSqlite3 != nil)
+        {
+            lastInsertRow = Int64(sqlite3_last_insert_rowid(mSqlite3))
+        }
+        
+        return lastInsertRow
+    }
+    
+    // MARK - Getting the Number of Rows Changed
+    
+    func numberOfChangedRows() -> Int
+    {
+        var numberOfChangedRows: Int = 0
+        
+        if (mSqlite3 != nil)
+        {
+            numberOfChangedRows = Int(sqlite3_changes(mSqlite3))
+        }
+        
+        return numberOfChangedRows
+    }
+    
+    // MARK: - Getting the Total of Rows Changed
+    
+    func totalOfChangedRows() -> Int
+    {
+        var totalOfChangedRows: Int = 0
+        
+        if (mSqlite3 != nil)
+        {
+            totalOfChangedRows = Int(sqlite3_total_changes(mSqlite3))
+        }
+        
+        return totalOfChangedRows
+    }
+    
+    // MARK: - Interrupting A Long-Running Query
+    
+    func interrupt() -> Void
+    {
+        if (mSqlite3 != nil)
+        {
+            sqlite3_interrupt(mSqlite3)
+        }
+    }
 }
