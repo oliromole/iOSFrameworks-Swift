@@ -37,3 +37,119 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+import Foundation
+import SQLite3
+
+class RWSQLiteMutex
+{
+    private var mNeedsFree: Bool
+    private var mSqlite3_mutex: OpaquePointer?
+    
+    // MARK: Initializers
+    
+    public init()
+    {
+        mNeedsFree     = false
+        mSqlite3_mutex = nil
+    }
+    
+    public convenience init(mutexType: RWSQLiteMutexType) throws
+    {
+        guard let sqlite3_mutex: OpaquePointer = sqlite3_mutex_alloc(Int32(mutexType.rawValue)) else {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let needsFree : Bool = ((mutexType != RWSQLiteMutexType.fast) &&
+                                (mutexType != RWSQLiteMutexType.recursive))
+        
+        
+        self.init(sqlite3_mutex: sqlite3_mutex, needsFree: needsFree)
+    }
+    
+    public convenience init(sqlite3_mutex: OpaquePointer?, needsFree: Bool)
+    {
+        self.init()
+        
+        self.set(sqlite3_mutex: sqlite3_mutex, needsFree: needsFree)
+    }
+    
+    // MARK: Deinitializer
+    
+    deinit
+    {
+        if (mSqlite3_mutex != nil) && mNeedsFree
+        {
+            sqlite3_mutex_free(mSqlite3_mutex)
+            mSqlite3_mutex = nil;
+        }
+    }
+    
+    // Managing the sqlite3_stmt
+    
+    public var needsFree: Bool
+    {
+        get
+        {
+            return mNeedsFree
+        }
+    }
+    
+    public var sqlite3_mutex: OpaquePointer?
+    {
+        get
+        {
+            return mSqlite3_mutex
+        }
+    }
+    
+    public func set(sqlite3_mutex: OpaquePointer?, needsFree: Bool) -> Void
+    {
+        mNeedsFree     = needsFree
+        mSqlite3_mutex = sqlite3_mutex
+    }
+    
+    // MARK: Entering and Trying and Leaving the Mutex
+    
+    public func enter() throws -> Void
+    {
+        guard let sqlite3_mutex = mSqlite3_mutex else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        sqlite3_mutex_enter(sqlite3_mutex)
+    }
+    
+    public func `try`() throws -> Bool
+    {
+        guard let sqlite3_mutex = mSqlite3_mutex else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_mutex_try(sqlite3_mutex))
+        
+        let entered: Bool = (resultCode == RWSQLiteResultCode.ok)
+        
+        return entered
+    }
+    
+    public func leave() throws -> Void
+    {
+        guard let sqlite3_mutex = mSqlite3_mutex else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        sqlite3_mutex_leave(sqlite3_mutex)
+    }
+}
