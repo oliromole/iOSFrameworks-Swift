@@ -80,9 +80,9 @@ class RWSQLite
     
     public convenience init(url: URL?, fileOpenOptions: RWSQLiteFileOpenOptions, virtualFileSystem: String?) throws
     {
-        var sqlite3: OpaquePointer?
-        
         let urlOpenOptions2: RWSQLiteFileOpenOptions = [fileOpenOptions, RWSQLiteFileOpenOptions.uri]
+        
+        var sqlite3: OpaquePointer?
         
         let resultCode = RWSQLiteResultCode(sqlite3_open_v2(url?.absoluteString,
                                                             &sqlite3,
@@ -252,4 +252,36 @@ class RWSQLite
             sqlite3_interrupt(mSqlite3)
         }
     }
+    
+    // MARK: Creating the Statement
+    
+    func createStatement(command: String) throws -> RWSQLiteStatement
+    {
+        guard let sqlite3 = mSqlite3 else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        var sqlite3_stmt: OpaquePointer?
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_prepare_v2(sqlite3,
+                                                               command,
+                                                               -1,
+                                                               &sqlite3_stmt,
+                                                               nil));
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+        
+        let statement = RWSQLiteStatement(sqlite3_stmt: sqlite3_stmt)
+        
+        return statement
+    }
 }
+
