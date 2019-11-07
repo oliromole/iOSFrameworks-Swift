@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17B47BDD2374603B0005649B /* RWSQLiteDestructorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B47BDC2374603B0005649B /* RWSQLiteDestructorType.swift */; };
 		17FEA0B32358986A006B7762 /* RWSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0B22358986A006B7762 /* RWSQLite.swift */; };
 		17FEA0B72358A115006B7762 /* RWSQLiteBlob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0B62358A115006B7762 /* RWSQLiteBlob.swift */; };
 		17FEA0B92358A123006B7762 /* RWSQLiteBlobOpenOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FEA0B82358A123006B7762 /* RWSQLiteBlobOpenOptions.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		17B47BDC2374603B0005649B /* RWSQLiteDestructorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteDestructorType.swift; sourceTree = "<group>"; };
 		17FEA0A72358980B006B7762 /* libRWSQLite.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRWSQLite.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FEA0B22358986A006B7762 /* RWSQLite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RWSQLite.swift; sourceTree = "<group>"; };
 		17FEA0B62358A115006B7762 /* RWSQLiteBlob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSQLiteBlob.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				17FEA0B82358A123006B7762 /* RWSQLiteBlobOpenOptions.swift */,
 				17FEA0BA2358A132006B7762 /* RWSQLiteData.swift */,
 				17FEA0BC2358A140006B7762 /* RWSQLiteDataType.swift */,
+				17B47BDC2374603B0005649B /* RWSQLiteDestructorType.swift */,
 				17FEA0BE2358A14D006B7762 /* RWSQLiteError.swift */,
 				17FEA0C02358A15B006B7762 /* RWSQLiteFileOpenOptions.swift */,
 				17FEA0C42358A17A006B7762 /* RWSQLiteLibraryThreadsafeMode.swift */,
@@ -187,6 +190,7 @@
 				17FEA0C12358A15B006B7762 /* RWSQLiteFileOpenOptions.swift in Sources */,
 				17FEA0C72358A189006B7762 /* RWSQLiteLimit.swift in Sources */,
 				17FEA0BD2358A140006B7762 /* RWSQLiteDataType.swift in Sources */,
+				17B47BDD2374603B0005649B /* RWSQLiteDestructorType.swift in Sources */,
 				17FEA151235DE942006B7762 /* RWSQLiteResultCode.swift in Sources */,
 				17FEA0D52358A1E0006B7762 /* RWSQLiteURL.swift in Sources */,
 				17FEA0BB2358A132006B7762 /* RWSQLiteData.swift in Sources */,

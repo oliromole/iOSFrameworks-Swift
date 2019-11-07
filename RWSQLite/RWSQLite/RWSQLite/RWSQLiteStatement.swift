@@ -130,6 +130,262 @@ class RWSQLiteStatement
         return isReadonly;
     }
     
+    // MARK: - Binding Values To Prepared Statements
+    
+    public func bindData(data: Data, atIndex: Int) throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let dataCount : Int = data.count
+        
+        var resultCode : RWSQLiteResultCode = RWSQLiteResultCode.ok
+        
+        data.withUnsafeBytes { (byteCArray: UnsafeRawBufferPointer) in
+            if MemoryLayout.size(ofValue: dataCount) == MemoryLayout.size(ofValue: Int32(0))
+            {
+                resultCode = RWSQLiteResultCode(sqlite3_bind_blob(sqlite3_stmt,
+                                                                  Int32(atIndex + 1),
+                                                                  byteCArray.baseAddress,
+                                                                  Int32(data.count),
+                                                                  RWSQLiteDestructorType.transient.rawValue))
+            }
+            else
+            {
+                resultCode = RWSQLiteResultCode(sqlite3_bind_blob64(sqlite3_stmt,
+                                                                    Int32(atIndex + 1),
+                                                                    byteCArray.baseAddress,
+                                                                    UInt64(data.count),
+                                                                    RWSQLiteDestructorType.transient.rawValue))
+            }
+        }
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+    
+    public func bindData(data: Data, forName: String) throws -> Void
+    {
+        let atIndex = try self.bindIndexForName(forName)
+        
+        try self.bindData(data: data, atIndex: atIndex)
+    }
+    
+    public func bindDouble(value: Double, atIndex: Int) throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_bind_double(sqlite3_stmt,
+                                                                Int32(atIndex + 1),
+                                                                value))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+    
+    public func bindDouble(value: Double, forName: String) throws -> Void
+    {
+        let atIndex = try self.bindIndexForName(forName)
+        
+        try self.bindDouble(value: value, atIndex: atIndex)
+    }
+    
+    public func bindInt(value: Int, atIndex: Int) throws -> Void
+    {
+        if MemoryLayout.size(ofValue: Int(0)) == MemoryLayout.size(ofValue: Int32(0))
+        {
+            try self.bindInt32(value: Int32(value), atIndex: atIndex)
+        }
+        else
+        {
+            try self.bindInt32(value: Int32(value), atIndex: atIndex)
+        }
+    }
+    
+    public func bindInt(value: Int, forName: String) throws -> Void
+    {
+        if MemoryLayout.size(ofValue: Int(0)) == MemoryLayout.size(ofValue: Int32(0))
+        {
+            try self.bindInt32(value: Int32(value), forName: forName)
+        }
+        else
+        {
+            try self.bindInt32(value: Int32(value), forName: forName)
+        }
+    }
+    
+    public func bindInt32(value: Int32, atIndex: Int) throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_bind_int(sqlite3_stmt,
+                                                             Int32(atIndex + 1),
+                                                             value))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+    
+    public func bindInt32(value: Int32, forName: String) throws -> Void
+    {
+        let atIndex = try self.bindIndexForName(forName)
+        
+        try self.bindInt32(value: value, atIndex: atIndex)
+    }
+    
+    public func bindInt64(value: Int64, atIndex: Int) throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_bind_int64(sqlite3_stmt,
+                                                               Int32(atIndex + 1),
+                                                               value))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+    
+    public func bindInt64(value: Int64, forName: String) throws -> Void
+    {
+        let atIndex = try self.bindIndexForName(forName)
+        
+        try self.bindInt64(value: value, atIndex: atIndex)
+    }
+    
+    public func bindNil(atIndex: Int) throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_bind_null(sqlite3_stmt,
+                                                              Int32(atIndex + 1)))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+    
+    public func bindNil(forName: String) throws -> Void
+    {
+        let atIndex = try self.bindIndexForName(forName)
+        
+        try self.bindNil(atIndex: atIndex)
+    }
+    
+    public func bindString(value: String?, atIndex: Int) throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_bind_text(sqlite3_stmt,
+                                                              Int32(atIndex + 1),
+                                                              value,
+                                                              -1,
+                                                              RWSQLiteDestructorType.transient.rawValue))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+    
+    public func bindString(value: String, forName: String) throws -> Void
+    {
+        let atIndex = try self.bindIndexForName(forName)
+        
+        try self.bindString(value: value, atIndex: atIndex)
+    }
+    
+    public func bindZeroData(length: Int, atIndex: Int) throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_bind_zeroblob(sqlite3_stmt,
+                                                                  Int32(atIndex + 1),
+                                                                  Int32(length)))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+    
+    public func bindZeroData(length: Int, forName: String) throws -> Void
+    {
+        let atIndex = try self.bindIndexForName(forName)
+        
+        try self.bindZeroData(length: length, atIndex: atIndex)
+    }
+    
     // MARK: - Getting Data Binding
     
     // MARK: Getting a Number of SQL Parameters
