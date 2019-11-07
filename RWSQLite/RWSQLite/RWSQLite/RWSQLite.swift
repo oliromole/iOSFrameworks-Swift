@@ -105,7 +105,16 @@ class RWSQLite
     {
         if mSqlite3 != nil
         {
-            let resultCode = RWSQLiteResultCode(sqlite3_close(mSqlite3))
+            let resultCode : RWSQLiteResultCode
+
+            if #available(iOS 8.2, *)
+            {
+                resultCode = RWSQLiteResultCode(sqlite3_close_v2(sqlite3))
+            }
+            else
+            {
+                resultCode = RWSQLiteResultCode(sqlite3_close(sqlite3))
+            }
             
             if resultCode != RWSQLiteResultCode.ok
             {
