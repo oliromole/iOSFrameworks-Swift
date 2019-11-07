@@ -118,7 +118,7 @@ class RWSQLite
     
     // MARK: - Configuring The SQLite Library
     
-    func threadsafeMode() -> RWSQLiteLibraryThreadsafeMode
+    public func threadsafeMode() -> RWSQLiteLibraryThreadsafeMode
     {
         let threadsafeMode = RWSQLiteLibraryThreadsafeMode(sqlite3_threadsafe())
         
@@ -128,7 +128,7 @@ class RWSQLite
     //
     // NOTE: Use the parameter "fileOpenOptions" (RWSQLiteFileOpenOptions.noMutex or RWSQLiteFileOpenOptions.fullMutex) in the method "init", becasee the 'sqlite3_config' is unavailable for Swift (variadic function is unavailable).
     //
-    //func setThreadsafeMode(_ threadsafeMode: RWSQLiteLibraryThreadsafeMode) throws -> Void
+    //public func setThreadsafeMode(_ threadsafeMode: RWSQLiteLibraryThreadsafeMode) throws -> Void
     //
     
     // MARK: - Managing the sqlite3
@@ -150,7 +150,7 @@ class RWSQLite
     
     // MARK: - Closing A Database Connection
     
-    func close(automatic: Bool = true) throws -> Void
+    public func close(automatic: Bool = true) throws -> Void
     {
         guard let sqlite3 = mSqlite3 else
         {
@@ -187,14 +187,14 @@ class RWSQLite
     
     // MARK: - Getting the Last Error
     
-    func lastError() -> RWSQLiteError
+    public func lastError() -> RWSQLiteError
     {
         let error: RWSQLiteError = RWSQLiteErrorCreate(sqlite3: mSqlite3)
         
         return error;
     }
     
-    func throwLastError() throws -> Void
+    public func throwLastError() throws -> Void
     {
         let error: RWSQLiteError = RWSQLiteErrorCreate(sqlite3: mSqlite3)
         
@@ -203,7 +203,7 @@ class RWSQLite
     
     // MARK: - Getting the Last Insert Rowid
     
-    func lastInsertRowIdentifier() -> Int64
+    public func lastInsertRowIdentifier() -> Int64
     {
         var lastInsertRow:Int64 = 0
         
@@ -217,7 +217,7 @@ class RWSQLite
     
     // MARK - Getting the Number of Rows Changed
     
-    func numberOfChangedRows() -> Int
+    public func numberOfChangedRows() -> Int
     {
         var numberOfChangedRows: Int = 0
         
@@ -231,7 +231,7 @@ class RWSQLite
     
     // MARK: - Getting the Total of Rows Changed
     
-    func totalOfChangedRows() -> Int
+    public func totalOfChangedRows() -> Int
     {
         var totalOfChangedRows: Int = 0
         
@@ -245,7 +245,7 @@ class RWSQLite
     
     // MARK: - Interrupting A Long-Running Query
     
-    func interrupt() -> Void
+    public func interrupt() -> Void
     {
         if (mSqlite3 != nil)
         {
@@ -255,7 +255,7 @@ class RWSQLite
     
     // MARK: Creating the Statement
     
-    func createStatement(command: String) throws -> RWSQLiteStatement
+    public func createStatement(command: String) throws -> RWSQLiteStatement
     {
         guard let sqlite3 = mSqlite3 else
         {
