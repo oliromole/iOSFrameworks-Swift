@@ -283,5 +283,27 @@ class RWSQLite
         
         return statement
     }
+    
+    // MARK: Retrieving the Mutex for the Database Connection
+    
+    public func createMutex() throws -> RWSQLiteMutex
+    {
+        guard let sqlite3 = mSqlite3 else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        guard let sqlite3_mutex: OpaquePointer = sqlite3_db_mutex(sqlite3) else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let mutex = RWSQLiteMutex(sqlite3_mutex: sqlite3_mutex, needsFree: false)
+        
+        return mutex
+    }
 }
-
