@@ -103,4 +103,20 @@ class RWSQLiteStatement
         
         return command
     }
+    
+    // MARK: Determining if an SQL Statement Writes the Database
+    
+    public func getIsReadonly() throws -> Bool
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let isReadonly: Bool = (sqlite3_stmt_readonly(sqlite3_stmt) != 0)
+        
+        return isReadonly;
+    }
 }
