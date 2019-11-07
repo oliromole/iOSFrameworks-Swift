@@ -63,8 +63,17 @@ class RWSQLiteStatement
     
     deinit
     {
-        sqlite3_finalize(mSqlite3_stmt)
-        mSqlite3_stmt = nil
+        if mSqlite3_stmt != nil
+        {
+            let resultCode = RWSQLiteResultCode(sqlite3_finalize(mSqlite3_stmt))
+            
+            if resultCode != RWSQLiteResultCode.ok
+            {
+                fatalError("Can not finalize SQLite statement.")
+            }
+            
+            mSqlite3_stmt = nil
+        }
     }
     
     // MARK: - Managing the sqlite3_stmt
@@ -95,7 +104,8 @@ class RWSQLiteStatement
             throw error
         }
         
-        guard let cCommand: UnsafePointer<Int8> = sqlite3_sql(sqlite3_stmt) else {
+        guard let cCommand: UnsafePointer<Int8> = sqlite3_sql(sqlite3_stmt) else
+        {
             return nil;
         }
         
@@ -104,7 +114,7 @@ class RWSQLiteStatement
         return command
     }
     
-    // MARK: Determining if an SQL Statement Writes the Database
+    // MARK: - Determining if an SQL Statement Writes the Database
     
     public func getIsReadonly() throws -> Bool
     {
@@ -118,5 +128,246 @@ class RWSQLiteStatement
         let isReadonly: Bool = (sqlite3_stmt_readonly(sqlite3_stmt) != 0)
         
         return isReadonly;
+    }
+    
+    // MARK: - Getting Data Binding
+    
+    // MARK: Getting a Number of SQL Parameters
+    
+    public func getBindCount() throws -> Int
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let bindCount = Int(sqlite3_bind_parameter_count(sqlite3_stmt))
+        
+        return bindCount
+    }
+    
+    // MARK: Name of a Host Parameter
+    
+    public func bindNameAtIndex(_ bindIndex: Int) throws -> String?
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        guard let cBindName: UnsafePointer<Int8> = sqlite3_bind_parameter_name(sqlite3_stmt, Int32(bindIndex)) else
+        {
+            return nil
+        }
+        
+        let bindName = String(cString: cBindName)
+        
+        return bindName
+    }
+    
+    // MARK: Getting Index of a Parameter with a Given Name
+    
+    public func bindIndexForName(_ bindName: String) throws -> Int
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let bindIndex = Int(sqlite3_bind_parameter_index(sqlite3_stmt, bindName))
+        
+        return bindIndex
+    }
+    
+    // MARK: - Resetting All Bindings on a Prepared Statement
+    
+    public func clearBindings() throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_clear_bindings(sqlite3_stmt))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+    
+    // MARK: - Getting Result Data
+    
+    // MARK Getting Number of Columns in a Result Set
+    
+    public func getCollumCount() throws -> Int
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let collumCount = Int(sqlite3_column_count(sqlite3_stmt))
+        
+        return collumCount
+    }
+    
+    // MARK: - Getting Column Names in a Result Set
+    
+    public func getColumnNameAtIndex(_ columnIndex: Int) throws -> String?
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        guard let cColumnName: UnsafePointer<Int8> = sqlite3_column_name(sqlite3_stmt, Int32(columnIndex)) else
+        {
+            return nil;
+        }
+        
+        let columnName = String(cString: cColumnName)
+        
+        return columnName
+    }
+    
+    // MARK: - Getting Declared Datatype of a Query Result
+    
+    public func getColumnDecltypeNameAtIndex(_ columnIndex: Int) throws -> String?
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        guard let cColumnDecltypeName: UnsafePointer<Int8> = sqlite3_column_decltype(sqlite3_stmt, Int32(columnIndex)) else
+        {
+            return nil;
+        }
+        
+        let columnDecltypeName = String(cString: cColumnDecltypeName)
+        
+        return columnDecltypeName
+    }
+    
+    // MARK: - Evaluating An SQL Statement
+    
+    public func step() throws -> Bool
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_step(sqlite3_stmt))
+        
+        let isCompleted: Bool
+        
+        if resultCode == RWSQLiteResultCode.ok
+        {
+            isCompleted = true
+        }
+        else if resultCode == RWSQLiteResultCode.row
+        {
+            isCompleted = false
+        }
+        else if resultCode == RWSQLiteResultCode.done
+        {
+            isCompleted = true
+        }
+        else
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+        
+        return isCompleted
+    }
+    
+    // MARK: - Getting Number of Columns in a Result Set in the Current Row
+    
+    public func dataCount() throws -> Int
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let dataCount = Int(sqlite3_data_count(sqlite3_stmt))
+        
+        return dataCount
+    }
+    
+    // MARK: - Destroying a Prepared Statement Object
+    
+    public func finalize() throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_finalize(mSqlite3_stmt))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+        
+        mSqlite3_stmt = nil
+    }
+    
+    // MARK: - Resetting a Prepared Statement Object
+    
+    public func reset() throws -> Void
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_reset(mSqlite3_stmt))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let sqlite3: OpaquePointer? = sqlite3_db_handle(sqlite3_stmt)
+            
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
     }
 }
