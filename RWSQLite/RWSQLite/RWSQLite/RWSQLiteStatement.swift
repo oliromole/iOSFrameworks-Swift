@@ -37,3 +37,70 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+import Foundation
+import SQLite3
+
+class RWSQLiteStatement
+{
+    private var mSqlite3_stmt: OpaquePointer?
+    
+    // MARK: - Initializing and Creating a RWSQLiteStatement
+    
+    public init()
+    {
+        mSqlite3_stmt = nil
+    }
+    
+    public convenience init(sqlite3_stmt: OpaquePointer?)
+    {
+        self.init()
+        
+        self.sqlite3_stmt = sqlite3_stmt;
+    }
+    
+    // MARK: Deinitializer
+    
+    deinit
+    {
+        sqlite3_finalize(mSqlite3_stmt)
+        mSqlite3_stmt = nil
+    }
+    
+    // MARK: - Managing the sqlite3_stmt
+    
+    public var sqlite3_stmt: OpaquePointer?
+    {
+        get
+        {
+            return mSqlite3_stmt
+        }
+        set
+        {
+            if mSqlite3_stmt != newValue
+            {
+                mSqlite3_stmt = newValue
+            }
+        }
+    }
+    
+    // MARK: - Retrieving Statement SQL
+    
+    public func getCommand() throws -> String?
+    {
+        guard let sqlite3_stmt = mSqlite3_stmt else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        guard let cCommand: UnsafePointer<Int8> = sqlite3_sql(sqlite3_stmt) else {
+            return nil;
+        }
+        
+        let command = String(cString: cCommand)
+        
+        return command
+    }
+}
