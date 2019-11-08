@@ -37,3 +37,38 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+struct RWSQLiteDataType: Equatable
+{
+    public let rawValue: Int
+    
+    // MARK: Data Types
+    
+    public static let integer = RWSQLiteResultCode(1) // SQLITE_INTEGER  1
+    public static let float   = RWSQLiteResultCode(2) // SQLITE_FLOAT    2
+    public static let text    = RWSQLiteResultCode(3) // SQLITE_TEXT     3
+    /**/                                              // SQLITE3_TEXT    3
+    public static let blob    = RWSQLiteResultCode(4) // SQLITE_BLOB     4
+    public static let null    = RWSQLiteResultCode(5) // SQLITE_NULL     5
+    
+    // MARK: Initializers
+    
+    public init(_ rawValue: Int)
+    {
+        self.rawValue = rawValue
+    }
+    
+    public init(_ rawValue: Int32)
+    {
+        self.rawValue = Int(rawValue)
+    }
+    
+    // MARK: Equatable
+    
+    public static func == (lhs: RWSQLiteDataType, rhs: RWSQLiteDataType) -> Bool
+    {
+        let isEqual: Bool = (lhs.rawValue == rhs.rawValue)
+        
+        return isEqual
+    }
+}
