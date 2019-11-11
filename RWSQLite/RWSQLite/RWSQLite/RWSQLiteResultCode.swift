@@ -71,7 +71,7 @@ struct RWSQLiteResultCode: Equatable
     public static let authorization = RWSQLiteResultCode( 23) // SQLITE_AUTH        23 /* Authorization denied */
     public static let format        = RWSQLiteResultCode( 24) // SQLITE_FORMAT      24 /* Not used */
     public static let range         = RWSQLiteResultCode( 25) // SQLITE_RANGE       25 /* 2nd parameter to sqlite3_bind out of range */
-    public static let notDatabase   = RWSQLiteResultCode( 26) // SQLITE_NOTADB      26 /* File opened that is not a database file */
+    public static let notADatabase  = RWSQLiteResultCode( 26) // SQLITE_NOTADB      26 /* File opened that is not a database file */
     public static let notice        = RWSQLiteResultCode( 27) // SQLITE_NOTICE      27 /* Notifications from sqlite3_log() */
     public static let warning       = RWSQLiteResultCode( 28) // SQLITE_WARNING     28 /* Warnings from sqlite3_log() */
     public static let row           = RWSQLiteResultCode(100) // SQLITE_ROW        100 /* sqlite3_step() has another row ready */
