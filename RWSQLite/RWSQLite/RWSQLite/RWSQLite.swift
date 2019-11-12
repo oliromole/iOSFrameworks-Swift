@@ -320,7 +320,7 @@ class RWSQLite
     
     // MARK: - Opening the Blob
     
-    public func openBlob(fileName: String, tableName: String, columnName: String, rowIdentifier: Int64, options:RWSQLiteBlobOpenOptions) throws -> RWSQLiteBlob
+    public func openBlob(databaseName: String, tableName: String, columnName: String, rowIdentifier: Int64, options:RWSQLiteBlobOpenOptions) throws -> RWSQLiteBlob
     {
         guard let sqlite3 = mSqlite3 else
         {
@@ -332,7 +332,7 @@ class RWSQLite
         var sqlite3_blob: OpaquePointer?
         
         let resultCode = RWSQLiteResultCode(sqlite3_blob_open(sqlite3,
-                                                              fileName,
+                                                              databaseName,
                                                               tableName,
                                                               columnName,
                                                               rowIdentifier,
