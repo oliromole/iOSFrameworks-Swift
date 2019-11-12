@@ -42,7 +42,7 @@ struct RWSQLiteFileOpenOptions: OptionSet
 {
     public let rawValue: Int
     
-    // MARK: Flags for File Open Operations
+    // MARK: - Flags for File Open Operations
     
     public static let readonly                                           = RWSQLiteFileOpenOptions(rawValue: 0x00000001) // SQLITE_OPEN_READONLY         0x00000001  /* Ok for sqlite3_open_v2() */
     public static let readWrite                                          = RWSQLiteFileOpenOptions(rawValue: 0x00000002) // SQLITE_OPEN_READWRITE        0x00000002  /* Ok for sqlite3_open_v2() */

@@ -45,7 +45,7 @@ class RWSQLiteBlob
 {
     private var mSqlite3_blob: OpaquePointer?
     
-    // MARK: - Initializing and Creating a RWSQLiteBlob
+    // MARK: - Initializers
     
     public init()
     {
@@ -59,7 +59,7 @@ class RWSQLiteBlob
         self.sqlite3_blob = sqlite3_blob;
     }
     
-    // MARK: Deinitializer
+    // MARK: - Deinitializer
     
     deinit
     {

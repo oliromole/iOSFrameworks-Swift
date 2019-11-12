@@ -42,7 +42,7 @@ struct RWSQLiteResultCode: Equatable
 {
     public let rawValue: Int
     
-    // MARK: Result Codes
+    // MARK: - Result Codes
     
     public static let ok            = RWSQLiteResultCode(  0) // SQLITE_OK           0 /* Successful result */
     
@@ -77,7 +77,7 @@ struct RWSQLiteResultCode: Equatable
     public static let row           = RWSQLiteResultCode(100) // SQLITE_ROW        100 /* sqlite3_step() has another row ready */
     public static let done          = RWSQLiteResultCode(101) // SQLITE_DONE       101 /* sqlite3_step() has finished executing */
     
-    // MARK: Extended Result Codes
+    // MARK: - Extended Result Codes
     
     public static let errorCollatingSequence          = RWSQLiteResultCode(RWSQLiteResultCode.error.rawValue         | ( 1<<8)) // SQLITE_ERROR_MISSING_COLLSEQ   (SQLITE_ERROR | (1<<8))
     public static let errorRetry                      = RWSQLiteResultCode(RWSQLiteResultCode.error.rawValue         | ( 2<<8)) // SQLITE_ERROR_RETRY             (SQLITE_ERROR | (2<<8))
@@ -159,7 +159,7 @@ struct RWSQLiteResultCode: Equatable
     
     public static let okLoadPermanently               = RWSQLiteResultCode(RWSQLiteResultCode.ok.rawValue            | ( 1<<8)) // SQLITE_OK_LOAD_PERMANENTLY     (SQLITE_OK | (1<<8))
     
-    // MARK: Initializers
+    // MARK: - Initializers
 
     public init(_ rawValue: Int)
     {
@@ -171,7 +171,7 @@ struct RWSQLiteResultCode: Equatable
         self.rawValue = Int(rawValue)
     }
     
-    // MARK: Equatable
+    // MARK: - Equatable
     
     public static func == (lhs: RWSQLiteResultCode, rhs: RWSQLiteResultCode) -> Bool
     {

@@ -42,7 +42,7 @@ struct RWSQLiteDataType: Equatable
 {
     public let rawValue: Int
     
-    // MARK: Data Types
+    // MARK: - Data Types
     
     public static let integer = RWSQLiteResultCode(1) // SQLITE_INTEGER  1
     public static let float   = RWSQLiteResultCode(2) // SQLITE_FLOAT    2
@@ -51,7 +51,7 @@ struct RWSQLiteDataType: Equatable
     public static let blob    = RWSQLiteResultCode(4) // SQLITE_BLOB     4
     public static let null    = RWSQLiteResultCode(5) // SQLITE_NULL     5
     
-    // MARK: Initializers
+    // MARK: - Initializers
     
     public init(_ rawValue: Int)
     {
@@ -63,7 +63,7 @@ struct RWSQLiteDataType: Equatable
         self.rawValue = Int(rawValue)
     }
     
-    // MARK: Equatable
+    // MARK: - Equatable
     
     public static func == (lhs: RWSQLiteDataType, rhs: RWSQLiteDataType) -> Bool
     {

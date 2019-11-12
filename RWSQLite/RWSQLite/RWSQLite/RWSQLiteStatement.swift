@@ -45,7 +45,7 @@ class RWSQLiteStatement
 {
     private var mSqlite3_stmt: OpaquePointer?
     
-    // MARK: - Initializing and Creating a RWSQLiteStatement
+    // MARK: - Initializers
     
     public init()
     {
@@ -59,7 +59,7 @@ class RWSQLiteStatement
         self.sqlite3_stmt = sqlite3_stmt;
     }
     
-    // MARK: Deinitializer
+    // MARK: - Deinitializer
     
     deinit
     {
@@ -466,7 +466,7 @@ class RWSQLiteStatement
     
     // MARK: - Getting Result Data
     
-    // MARK Getting Number of Columns in a Result Set
+    // MARK: Getting Number of Columns in a Result Set
     
     public func getCollumCount() throws -> Int
     {
@@ -482,7 +482,7 @@ class RWSQLiteStatement
         return collumCount
     }
     
-    // MARK: - Getting Column Names in a Result Set
+    // MARK: Getting Column Names in a Result Set
     
     public func getColumnNameAtIndex(_ columnIndex: Int) throws -> String?
     {
@@ -503,7 +503,7 @@ class RWSQLiteStatement
         return columnName
     }
     
-    // MARK: - Getting Declared Datatype of a Query Result
+    // MARK: Getting Declared Datatype of a Query Result
     
     public func getColumnDecltypeNameAtIndex(_ columnIndex: Int) throws -> String?
     {

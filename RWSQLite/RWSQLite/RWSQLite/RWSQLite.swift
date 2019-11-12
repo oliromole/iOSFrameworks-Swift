@@ -45,7 +45,7 @@ class RWSQLite
 {
     private var mSqlite3: OpaquePointer?
     
-    // MARK: Initializers
+    // MARK: - Initializers
     
     public init()
     {
@@ -99,7 +99,7 @@ class RWSQLite
         self.init(sqlite3: sqlite3)
     }
     
-    // MARK: Deinitializer
+    // MARK: - Deinitializer
     
     deinit
     {
@@ -226,7 +226,7 @@ class RWSQLite
         return lastInsertRow
     }
     
-    // MARK - Getting the Number of Rows Changed
+    // MARK: - Getting the Number of Rows Changed
     
     public func numberOfChangedRows() -> Int
     {
@@ -264,7 +264,7 @@ class RWSQLite
         }
     }
     
-    // MARK: Creating the Statement
+    // MARK: - Creating the Statement
     
     public func createStatement(command: String) throws -> RWSQLiteStatement
     {
@@ -295,7 +295,7 @@ class RWSQLite
         return statement
     }
     
-    // MARK: Retrieving the Mutex for the Database Connection
+    // MARK: - Retrieving the Mutex for the Database Connection
     
     public func createMutex() throws -> RWSQLiteMutex
     {

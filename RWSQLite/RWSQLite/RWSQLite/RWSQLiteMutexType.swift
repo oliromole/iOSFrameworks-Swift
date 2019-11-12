@@ -42,7 +42,7 @@ struct RWSQLiteMutexType: Equatable
 {
     public let rawValue: Int
     
-    // MARK: Result Codes
+    // MARK: - Result Codes
     
     public static let fast               = RWSQLiteMutexType( 0) // SQLITE_MUTEX_FAST             0
     public static let recursive          = RWSQLiteMutexType( 1) // SQLITE_MUTEX_RECURSIVE        1
@@ -61,7 +61,7 @@ struct RWSQLiteMutexType: Equatable
     public static let staticVfs2         = RWSQLiteMutexType(12) // SQLITE_MUTEX_STATIC_VFS2     12  /* For use by extension VFS */
     public static let staticVfs3         = RWSQLiteMutexType(13) // SQLITE_MUTEX_STATIC_VFS3     13  /* For use by application VFS */
     
-    // MARK: Initializers
+    // MARK: - Initializers
     
     public init(_ rawValue: Int)
     {
@@ -73,7 +73,7 @@ struct RWSQLiteMutexType: Equatable
         self.rawValue = Int(rawValue)
     }
     
-    // MARK: Equatable
+    // MARK: - Equatable
     
     public static func == (lhs: RWSQLiteMutexType, rhs: RWSQLiteMutexType) -> Bool
     {

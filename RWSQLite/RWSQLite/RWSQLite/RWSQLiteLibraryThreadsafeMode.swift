@@ -42,13 +42,13 @@ struct RWSQLiteLibraryThreadsafeMode: Equatable
 {
     public let rawValue: Int
     
-    // MARK: Threadsafe Modes
+    // MARK: - Threadsafe Modes
     
     public static let singleThread = RWSQLiteLibraryThreadsafeMode(0)
     public static let multiThread  = RWSQLiteLibraryThreadsafeMode(1)
     public static let serialized   = RWSQLiteLibraryThreadsafeMode(2)
     
-    // MARK: Initializers
+    // MARK: - Initializers
     
     public init(_ rawValue: Int)
     {
@@ -60,7 +60,7 @@ struct RWSQLiteLibraryThreadsafeMode: Equatable
         self.rawValue = Int(rawValue)
     }
     
-    // MARK: Equatable
+    // MARK: - Equatable
     
     public static func == (lhs: RWSQLiteLibraryThreadsafeMode, rhs: RWSQLiteLibraryThreadsafeMode) -> Bool
     {

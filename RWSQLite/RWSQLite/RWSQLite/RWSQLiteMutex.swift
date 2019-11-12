@@ -46,7 +46,7 @@ class RWSQLiteMutex
     private var mNeedsFree: Bool
     private var mSqlite3_mutex: OpaquePointer?
     
-    // MARK: Initializers
+    // MARK: - Initializers
     
     public init()
     {
@@ -76,7 +76,7 @@ class RWSQLiteMutex
         self.set(sqlite3_mutex: sqlite3_mutex, needsFree: needsFree)
     }
     
-    // MARK: Deinitializer
+    // MARK: - Deinitializer
     
     deinit
     {
@@ -87,7 +87,7 @@ class RWSQLiteMutex
         }
     }
     
-    // Managing the sqlite3_stmt
+    // MARK: - Managing the sqlite3_stmt
     
     public var needsFree: Bool
     {
@@ -111,7 +111,7 @@ class RWSQLiteMutex
         mSqlite3_mutex = sqlite3_mutex
     }
     
-    // MARK: Entering and Trying and Leaving the Mutex
+    // MARK: - Entering and Trying and Leaving the Mutex
     
     public func enter() throws -> Void
     {

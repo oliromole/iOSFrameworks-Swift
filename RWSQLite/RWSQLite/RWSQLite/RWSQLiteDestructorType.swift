@@ -44,12 +44,12 @@ struct RWSQLiteDestructorType
 {
     public let rawValue: sqlite3_destructor_type?
     
-    // MARK: Result Codes
+    // MARK: - Result Codes
     
     public static let `static`  = RWSQLiteDestructorType( 0) // SQLITE_STATIC      ((sqlite3_destructor_type)0)
     public static let transient = RWSQLiteDestructorType(-1) // SQLITE_TRANSIENT   ((sqlite3_destructor_type)-1)
     
-    // MARK: Initializers
+    // MARK: - Initializers
     
     public init(_ rawValue: sqlite3_destructor_type?)
     {

@@ -46,7 +46,7 @@ struct RWSQLiteError: Error
     public let extendedResultCode: RWSQLiteResultCode
     public let resultCode: RWSQLiteResultCode
     
-    // MARK: Initializers
+    // MARK: - Initializers
     
     public init(resultCode: RWSQLiteResultCode, extendedResultCode: RWSQLiteResultCode, errorMessage: String?)
     {
