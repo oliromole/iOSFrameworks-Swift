@@ -167,6 +167,11 @@ class RWSQLiteBlob
         
         let byteCArray: UnsafeMutableRawBufferPointer = UnsafeMutableRawBufferPointer.allocate(byteCount: length, alignment: 64)
         
+        defer
+        {
+            byteCArray.deallocate()
+        }
+        
         let resultCode = RWSQLiteResultCode(sqlite3_blob_read(sqlite3_blob,
                                                               byteCArray.baseAddress,
                                                               Int32(length),
@@ -184,8 +189,6 @@ class RWSQLiteBlob
         if let byteCArrayBaseAddress: UnsafeMutableRawPointer = byteCArray.baseAddress
         {
             data = Data(bytes: byteCArrayBaseAddress, count: length)
-            
-            byteCArrayBaseAddress.deallocate()
         }
         else
         {
