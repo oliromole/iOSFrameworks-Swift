@@ -59,7 +59,7 @@ class RWSQLite
         self.sqlite3 = sqlite3;
     }
     
-    public convenience init(fileName: String?, fileOpenOptions: RWSQLiteFileOpenOptions, virtualFileSystem: String?) throws
+    public convenience init(fileName: String, fileOpenOptions: RWSQLiteFileOpenOptions, virtualFileSystem: String?) throws
     {
         var sqlite3: OpaquePointer?
         
@@ -192,6 +192,8 @@ class RWSQLite
             
             throw error
         }
+        
+        mSqlite3 = nil
     }
     
     // MARK: - Getting the Last Error
@@ -314,5 +316,38 @@ class RWSQLite
         let mutex = RWSQLiteMutex(sqlite3_mutex: sqlite3_mutex, needsFree: false)
         
         return mutex
+    }
+    
+    // MARK: - Opening the Blob
+    
+    public func openBlob(fileName: String, tableName: String, columnName: String, rowIdentifier: Int64, options:RWSQLiteBlobOpenOptions) throws -> RWSQLiteBlob
+    {
+        guard let sqlite3 = mSqlite3 else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        var sqlite3_blob: OpaquePointer?
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_blob_open(sqlite3,
+                                                              fileName,
+                                                              tableName,
+                                                              columnName,
+                                                              rowIdentifier,
+                                                              Int32(options.rawValue),
+                                                              &sqlite3_blob));
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let error = RWSQLiteErrorCreate(sqlite3: sqlite3, resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+        
+        let blob = RWSQLiteBlob(sqlite3_blob: sqlite3_blob)
+        
+        return blob
     }
 }

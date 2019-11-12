@@ -37,3 +37,198 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+import Foundation
+import SQLite3
+
+class RWSQLiteBlob
+{
+    private var mSqlite3_blob: OpaquePointer?
+    
+    // MARK: - Initializing and Creating a RWSQLiteBlob
+    
+    public init()
+    {
+        mSqlite3_blob = nil
+    }
+    
+    public convenience init(sqlite3_blob: OpaquePointer?)
+    {
+        self.init()
+        
+        self.sqlite3_blob = sqlite3_blob;
+    }
+    
+    // MARK: Deinitializer
+    
+    deinit
+    {
+        if mSqlite3_blob != nil
+        {
+            let resultCode = RWSQLiteResultCode(sqlite3_blob_close(mSqlite3_blob))
+            
+            if resultCode != RWSQLiteResultCode.ok
+            {
+                fatalError("Can not finalize SQLite blob.")
+            }
+            
+            mSqlite3_blob = nil
+        }
+    }
+    
+    // MARK: - Managing the sqlite3_blob
+    
+    public var sqlite3_blob: OpaquePointer?
+    {
+        get
+        {
+            return mSqlite3_blob
+        }
+        set
+        {
+            if mSqlite3_blob != newValue
+            {
+                mSqlite3_blob = newValue
+            }
+        }
+    }
+    
+    // MARK: - Reopening the Blob Object.
+    
+    public func reopen(rowIdentifier: Int64) throws -> Void
+    {
+        guard let sqlite3_blob = mSqlite3_blob else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_blob_reopen(sqlite3_blob,
+                                                                rowIdentifier))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+    
+    // MARK: - Closing the Blob Object
+    
+    public func cloase() throws -> Void
+    {
+        guard let sqlite3_blob = mSqlite3_blob else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_blob_close(sqlite3_blob))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+        
+        mSqlite3_blob = nil
+    }
+    
+    // MARK: - Testing Data
+    
+    public func getLength() throws -> Int
+    {
+        guard let sqlite3_blob = mSqlite3_blob else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let length = Int(sqlite3_blob_bytes(sqlite3_blob))
+        
+        return length
+    }
+    
+    // MARK: - Reading the Data
+    
+    public func readData(length: Int, offset: Int) throws -> Data
+    {
+        guard let sqlite3_blob = mSqlite3_blob else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        let byteCArray: UnsafeMutableRawBufferPointer = UnsafeMutableRawBufferPointer.allocate(byteCount: length, alignment: 64)
+        
+        let resultCode = RWSQLiteResultCode(sqlite3_blob_read(sqlite3_blob,
+                                                              byteCArray.baseAddress,
+                                                              Int32(length),
+                                                              Int32(offset)))
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+        
+        let data: Data
+        
+        if let byteCArrayBaseAddress: UnsafeMutableRawPointer = byteCArray.baseAddress
+        {
+            data = Data(bytes: byteCArrayBaseAddress, count: length)
+            
+            byteCArrayBaseAddress.deallocate()
+        }
+        else
+        {
+            if length == 0
+            {
+                data = Data()
+            }
+            else
+            {
+                let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+                
+                throw error
+            }
+        }
+        
+        return data
+    }
+    
+    // MARK: - Writing the Data
+    
+    public func write(data: Data, offset: Int) throws -> Void
+    {
+        guard let sqlite3_blob = mSqlite3_blob else
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: RWSQLiteResultCode.error)
+            
+            throw error
+        }
+        
+        var resultCode : RWSQLiteResultCode = RWSQLiteResultCode.ok
+        
+        data.withUnsafeBytes { (byteCArray: UnsafeRawBufferPointer) in
+            resultCode = RWSQLiteResultCode(sqlite3_blob_write(sqlite3_blob,
+                                                               byteCArray.baseAddress,
+                                                               Int32(data.count),
+                                                               Int32(offset)))
+        }
+        
+        if resultCode != RWSQLiteResultCode.ok
+        {
+            let error = RWSQLiteErrorCreate(resultCodeOrExtendedResultCode: resultCode);
+            
+            throw error
+        }
+    }
+}

@@ -37,3 +37,34 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+struct RWSQLiteBlobOpenOptions: Equatable
+{
+    public let rawValue: Int
+    
+    // MARK: Blob Open Options
+    
+    public static let readonly  = RWSQLiteBlobOpenOptions(0x00)
+    public static let readWrite = RWSQLiteBlobOpenOptions(0x01)
+
+    // MARK: Initializers
+    
+    public init(_ rawValue: Int)
+    {
+        self.rawValue = rawValue
+    }
+    
+    public init(_ rawValue: Int32)
+    {
+        self.rawValue = Int(rawValue)
+    }
+    
+    // MARK: Equatable
+    
+    public static func == (lhs: RWSQLiteBlobOpenOptions, rhs: RWSQLiteBlobOpenOptions) -> Bool
+    {
+        let isEqual: Bool = (lhs.rawValue == rhs.rawValue)
+        
+        return isEqual
+    }
+}
